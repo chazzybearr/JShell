@@ -28,4 +28,9 @@ public class File extends FilesysObject{
     public void updateSize() {
         this.size = contents.getBytes(StandardCharsets.UTF_16).length;
     }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
 }

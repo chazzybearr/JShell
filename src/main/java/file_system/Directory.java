@@ -27,4 +27,11 @@ public class Directory extends FilesysObject{
         this.children.remove(content);
     }
 
+    @Override
+    public String getName() {
+        final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_BLUE = "\u001B[34m";
+
+        return ANSI_BLUE + this.name + ANSI_RESET;
+    }
 }

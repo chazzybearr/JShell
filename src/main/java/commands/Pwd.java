@@ -16,7 +16,9 @@ public class Pwd extends Command{
     }
 
     public String runCommand(ShellState state, List<String> arguments) throws PwdException {
-        checkArguments(arguments);
+        if (!checkArguments(arguments)) {
+            throw new PwdException("-jshell: pwd: " + arguments + ": invalid option\npwd: usage: pwd");
+        }
         return state.getWorkingDirectory().getFilePath();
     }
 

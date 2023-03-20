@@ -1,7 +1,5 @@
 package commands;
 
-import exceptions.PwdException;
-
 import java.util.List;
 
 abstract public class Command {
@@ -13,10 +11,8 @@ abstract public class Command {
         this.maxArguments = maxArguments;
     }
 
-    public void checkArguments(List<String> arguments) throws PwdException {
-        if (arguments.size() > maxArguments || arguments.size() < minArguments) {
-            throw new PwdException("-jshell: pwd: " + arguments + ": invalid option\npwd: usage: pwd");
-        }
+    public boolean checkArguments(List<String> arguments) {
+        return arguments.size() <= maxArguments && arguments.size() >= minArguments;
     }
 
 

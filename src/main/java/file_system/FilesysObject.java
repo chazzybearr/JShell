@@ -21,9 +21,7 @@ abstract public class FilesysObject {
     }
 
 
-    public String getName() {
-        return name;
-    }
+    abstract public String getName();
 
     public void setName(String name) {
         this.name = name;
