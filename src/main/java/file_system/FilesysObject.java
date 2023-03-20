@@ -3,7 +3,7 @@ package file_system;
 import java.time.LocalDateTime;
 
 
-public class FilesysObject {
+abstract public class FilesysObject {
     String name;
     int ownerId;
     int groupId;
