@@ -72,4 +72,18 @@ abstract public class FilesysObject {
     public void setParentDirectory(Directory parentDirectory) {
         this.parentDirectory = parentDirectory;
     }
+
+    public String getFilePath() {
+        StringBuilder path = new StringBuilder();
+        if (getParentDirectory() != null) {
+            path.append(getParentDirectory().getFilePath());
+        }
+
+        if (getParentDirectory() != null) {
+            path.append("/").append(this.name);
+        }
+
+        return path.toString();
+    }
+
 }
