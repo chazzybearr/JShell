@@ -19,7 +19,7 @@ public class Cd extends Command{
     @Override
     public String runCommand(ShellState state, List<String> arguments) throws Exception {
         if (!checkArguments(arguments)) {
-            throw new CdException("");
+            throw new CdException("-jshell: cd: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\ncd: usage: cd [dir]");
         }
         String path = arguments.get(0);
         Directory targetDirectory = PathHelper.directoryFromPath(state, path);

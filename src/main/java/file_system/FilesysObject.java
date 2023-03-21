@@ -78,7 +78,13 @@ abstract public class FilesysObject {
         }
 
         if (getParentDirectory() != this) {
-            path.append("/").append(this.name);
+            path.append(this.name).append("/");
+        }
+        else {
+            path.append("/");
+        }
+        if (path.length() != 1) {
+            path.deleteCharAt(path.length() - 1);
         }
 
         return path.toString();

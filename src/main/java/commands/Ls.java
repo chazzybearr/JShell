@@ -19,7 +19,7 @@ public class Ls extends Command {
     @Override
     public String runCommand(ShellState state, List<String> arguments) throws Exception {
         if (!checkArguments(arguments)) {
-            throw new LsException("-jshell: ls: invalid option + " + arguments + "\npwd: usage: pwd");
+            throw new LsException("-jshell: ls: invalid option: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "\nls: usage: ls");
         }
 
         StringBuilder contents = new StringBuilder();
@@ -45,6 +45,9 @@ public class Ls extends Command {
 //                continue;
 //            }
 
+        }
+        if (!contents.isEmpty()) {
+            contents.append('\n');
         }
         return contents.toString();
     }
