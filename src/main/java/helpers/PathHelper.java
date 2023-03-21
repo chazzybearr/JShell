@@ -9,21 +9,26 @@ import java.util.Objects;
 
 public class PathHelper {
 
-    public static Directory directoryFromPath (ShellState state, String path) throws Exception {
+    public static FilesysObject filesysObjectFromPath (ShellState state, String path) throws Exception {
 
         // Absolute path
-        Directory curr;
+        FilesysObject curr;
         String[] steps = path.split("/");
 
         if (path.startsWith("/")) {
             curr = state.getFilesystem().getRoot();
 
             for (String step : steps) {
-                for (FilesysObject child : curr.getContents()) {
+                boolean found = false;
+                for (FilesysObject child : ((Directory) curr).getContents()) {
                     if (Objects.equals(child.getName(), step)) {
-                        curr = (Directory) child;
+                        curr = child;
+                        found = true;
                         break;
                     }
+                }
+                if (!found) {
+                    throw new CdFileException("cd: " + step + ": No such file or directory");
                 }
             }
         }
@@ -42,13 +47,17 @@ public class PathHelper {
                 }
 
                 else {
-                    for (FilesysObject child : curr.getContents()) {
+                    boolean found = false;
+                    for (FilesysObject child : ((Directory) curr).getContents()) {
                         if (Objects.equals(child.getName(), step)) {
-                            curr = (Directory) child;
+                            curr = child;
+                            found = true;
                             break;
                         }
                     }
-                    throw new CdFileException("cd: " + step + ": No such file or directory");
+                    if (!found) {
+                        throw new CdFileException(step + ": No such file or directory");
+                    }
                 }
             }
         }

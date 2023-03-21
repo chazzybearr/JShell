@@ -1,7 +1,10 @@
 package commands;
 
 import exceptions.CdException;
+import exceptions.CdFileException;
 import file_system.Directory;
+import file_system.File;
+import file_system.FilesysObject;
 import helpers.PathHelper;
 import state.ShellState;
 
@@ -22,8 +25,11 @@ public class Cd extends Command{
             throw new CdException("-jshell: cd: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\ncd: usage: cd [dir]");
         }
         String path = arguments.get(0);
-        Directory targetDirectory = PathHelper.directoryFromPath(state, path);
-        state.setWorkingDirectory(targetDirectory);
+        FilesysObject targetDirectory = PathHelper.filesysObjectFromPath(state, path);
+        if (targetDirectory instanceof File) {
+            throw new CdFileException("cd: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + ": No such directory");
+        }
+        state.setWorkingDirectory((Directory) targetDirectory);
         return "";
     }
 }
