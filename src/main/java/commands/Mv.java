@@ -1,5 +1,6 @@
 package commands;
 
+import exceptions.MvException;
 import exceptions.MvFileException;
 import exceptions.MvOverwriteException;
 import file_system.Directory;
@@ -22,9 +23,12 @@ public class Mv extends Command{
 
     @Override
     public String runCommand(ShellState state, List<String> arguments) throws Exception {
+        if (!checkArguments(arguments)) {
+            throw new MvException("mv: invalid option " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\nmv: usage: mv [SOURCE] [DEST]");
+        }
+
         String source = arguments.get(0);
         String destination = arguments.get(1);
-
 
 
         // Checking all possible error conditions
@@ -38,6 +42,7 @@ public class Mv extends Command{
         FilesysObject sourceFile = PathHelper.filesysObjectFromPath(state, source);
         if (!DirectoryHelper.isInDirectory(state.getWorkingDirectory(), destination)) {
             sourceFile.setName(destination);
+            return "";
         }
 
 

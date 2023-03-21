@@ -14,7 +14,7 @@ abstract public class FilesysObject {
 
     public FilesysObject(String name) {
         this.name = name;
-        LocalDateTime time = java.time.LocalDateTime.now();
+        LocalDateTime time = LocalDateTime.now();
         this.creationTime = time;
         this.modifiedTime = time;
         this.accessTime = time;
@@ -51,12 +51,20 @@ abstract public class FilesysObject {
         return modifiedTime;
     }
 
+    public void setModifiedTime() {
+        this.modifiedTime = LocalDateTime.now();
+    }
+
     public void setModifiedTime(LocalDateTime modifiedTime) {
         this.modifiedTime = modifiedTime;
     }
 
     public LocalDateTime getAccessTime() {
         return accessTime;
+    }
+
+    public void setAccessTime() {
+        this.accessTime = LocalDateTime.now();
     }
 
     public void setAccessTime(LocalDateTime accessTime) {

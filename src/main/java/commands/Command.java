@@ -17,7 +17,7 @@ abstract public class Command {
         return arguments.size() <= MAX_ARGUMENTS && arguments.size() >= MIN_ARGUMENTS;
     }
 
-    abstract String runCommand(ShellState state, List<String> arguments) throws Exception;
+    abstract public String runCommand(ShellState state, List<String> arguments) throws Exception;
 
 
 }
