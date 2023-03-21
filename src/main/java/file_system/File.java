@@ -33,4 +33,8 @@ public class File extends FilesysObject{
     public String getName() {
         return this.name;
     }
+
+    public String getColorName() {
+        return getName();
+    }
 }

@@ -16,6 +16,7 @@ public class Ls extends Command {
         super(MIN_ARGUMENT, MAX_ARGUMENT);
     }
 
+    @Override
     public String runCommand(ShellState state, List<String> arguments) throws Exception {
         if (!checkArguments(arguments)) {
             throw new LsException("-jshell: ls: invalid option + " + arguments + "\npwd: usage: pwd");
@@ -25,7 +26,7 @@ public class Ls extends Command {
         for (FilesysObject child : state.getWorkingDirectory().getContents()) {
 
             if (child != null && child != state.getWorkingDirectory() && child != state.getWorkingDirectory().getParentDirectory()) {
-                contents.append(child.getName()).append("\t");
+                contents.append(child.getColorName()).append("\t");
             }
 
 //          Lines to show hidden folders (future implementation)

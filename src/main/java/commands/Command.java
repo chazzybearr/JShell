@@ -1,19 +1,23 @@
 package commands;
 
+import state.ShellState;
+
 import java.util.List;
 
 abstract public class Command {
-    int minArguments;
-    int maxArguments;
+    int MIN_ARGUMENTS;
+    int MAX_ARGUMENTS;
 
     public Command(int minArguments, int maxArguments) {
-        this.minArguments = minArguments;
-        this.maxArguments = maxArguments;
+        MIN_ARGUMENTS = minArguments;
+        MAX_ARGUMENTS = maxArguments;
     }
 
     public boolean checkArguments(List<String> arguments) {
-        return arguments.size() <= maxArguments && arguments.size() >= minArguments;
+        return arguments.size() <= MAX_ARGUMENTS && arguments.size() >= MIN_ARGUMENTS;
     }
+
+    abstract String runCommand(ShellState state, List<String> arguments) throws Exception;
 
 
 }

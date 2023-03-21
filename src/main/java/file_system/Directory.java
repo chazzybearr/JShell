@@ -10,8 +10,6 @@ public class Directory extends FilesysObject{
         super(name);
         this.parentDirectory = parentDirectory;
         this.children = new ArrayList<>();
-        this.children.add(this);
-        this.children.add(this.parentDirectory);
     }
 
     public List<FilesysObject> getContents() {
@@ -29,9 +27,14 @@ public class Directory extends FilesysObject{
 
     @Override
     public String getName() {
+        return this.name;
+    }
+
+    public String getColorName() {
         final String ANSI_RESET = "\u001B[0m";
         final String ANSI_BLUE = "\u001B[34m";
 
         return ANSI_BLUE + this.name + ANSI_RESET;
     }
+
 }

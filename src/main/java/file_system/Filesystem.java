@@ -9,7 +9,8 @@ public class Filesystem {
     }
 
     public Filesystem() {
-        this.root = new Directory("/", null) ;
+        this.root = new Directory("/", null);
+        this.root.setParentDirectory(this.root);
     }
 
 }

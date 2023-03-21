@@ -73,15 +73,16 @@ abstract public class FilesysObject {
 
     public String getFilePath() {
         StringBuilder path = new StringBuilder();
-        if (getParentDirectory() != null) {
+        if (getParentDirectory() != this) {
             path.append(getParentDirectory().getFilePath());
         }
 
-        if (getParentDirectory() != null) {
+        if (getParentDirectory() != this) {
             path.append("/").append(this.name);
         }
 
         return path.toString();
     }
 
+    public abstract String getColorName();
 }
