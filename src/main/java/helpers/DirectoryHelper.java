@@ -16,4 +16,9 @@ public class DirectoryHelper {
         }
         return false;
     }
+
+    public static boolean isEmpty(Directory workingDirectory) {
+        return workingDirectory.getContents().isEmpty();
+    }
+
 }
