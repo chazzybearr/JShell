@@ -20,4 +20,8 @@ public class Constants {
         COMMAND_FROM_STR.put("touch", new Touch());
     }
 
+    public static int STDIN = 0;
+    public static int STDOUT = 1;
+    public static int STDERR = 2;
+
 }
