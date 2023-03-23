@@ -9,6 +9,8 @@ import state.ShellState;
 
 import java.util.List;
 
+import static lib.Constants.STDOUT;
+
 public class Mkdir extends Command{
     static int MIN_ARGUMENTS = 1;
     static int MAX_ARGUMENTS = 100;
@@ -40,6 +42,7 @@ public class Mkdir extends Command{
             throw new MkdirFileException(errorString.toString());
         }
 
+        fileDescriptors.get(STDOUT).write("");
         return "";
     }
 }

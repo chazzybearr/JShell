@@ -13,6 +13,8 @@ import state.ShellState;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static lib.Constants.STDOUT;
+
 public class Cat extends Command{
 
     static int MIN_ARGUMENTS = 1;
@@ -55,6 +57,7 @@ public class Cat extends Command{
             throw new CatFileException(errorString.toString());
         }
 
+        fileDescriptors.get(STDOUT).write(returnString.deleteCharAt(returnString.length() - 1).toString());
         return returnString.deleteCharAt(returnString.length() - 1).toString();
     }
 

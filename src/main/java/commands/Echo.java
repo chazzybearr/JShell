@@ -4,6 +4,8 @@ import state.ShellState;
 
 import java.util.List;
 
+import static lib.Constants.STDOUT;
+
 public class Echo extends Command{
     static int MIN_ARGUMENTS = 0;
     static int MAX_ARGUMENTS = 100;
@@ -22,6 +24,7 @@ public class Echo extends Command{
         if (returnString.isEmpty()) {
             return "\n";
         }
+        fileDescriptors.get(STDOUT).write(returnString.deleteCharAt(returnString.length() - 1).append("\n").toString());
         return returnString.deleteCharAt(returnString.length() - 1).append("\n").toString();
     }
 

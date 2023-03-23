@@ -11,6 +11,8 @@ import state.ShellState;
 
 import java.util.List;
 
+import static lib.Constants.STDOUT;
+
 public class Cd extends Command{
     static final int MIN_ARGUMENTS = 1;
     static final int MAX_ARGUMENTS = 1;
@@ -32,6 +34,7 @@ public class Cd extends Command{
         }
         state.setWorkingDirectory((Directory) targetDirectory);
         targetDirectory.setAccessTime();
+        fileDescriptors.get(STDOUT).write("");
         return "";
     }
 }

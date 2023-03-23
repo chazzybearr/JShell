@@ -11,6 +11,8 @@ import state.ShellState;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static lib.Constants.STDOUT;
+
 public class Touch extends Command{
     static int MIN_ARGUMENTS = 1;
     static int MAX_ARGUMENTS = 100;
@@ -41,6 +43,7 @@ public class Touch extends Command{
 
             }
         }
+        fileDescriptors.get(STDOUT).write("");
         return "";
     }
 }

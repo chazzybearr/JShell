@@ -6,6 +6,8 @@ import state.ShellState;
 
 import java.util.List;
 
+import static lib.Constants.STDOUT;
+
 public class Pwd extends Command{
     static int MIN_ARGUMENT = 0;
     static int MAX_ARGUMENT = 0;
@@ -20,6 +22,7 @@ public class Pwd extends Command{
         if (!checkArguments(arguments)) {
             throw new PwdException("-jshell: pwd: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + ": invalid option\npwd: usage: pwd");
         }
+        fileDescriptors.get(STDOUT).write(state.getWorkingDirectory().getFilePath() + "\n");
         return state.getWorkingDirectory().getFilePath() + "\n";
     }
 

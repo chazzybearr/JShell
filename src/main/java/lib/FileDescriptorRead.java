@@ -7,8 +7,15 @@ public class FileDescriptorRead extends FileDescriptor {
         super(fd, name);
     }
 
+    @Override
     public String read() {
-        return "";
+        return null;
     }
+
+    @Override
+    public void write(String output) {
+
+    }
+
 
 }

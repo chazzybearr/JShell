@@ -14,6 +14,8 @@ import state.ShellState;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static lib.Constants.STDOUT;
+
 public class Mv extends Command{
     static int MIN_ARGUMENTS = 2;
     static int MAX_ARGUMENTS = 2;
@@ -80,7 +82,7 @@ public class Mv extends Command{
             }
 
         }
-
+        fileDescriptors.get(STDOUT).write("");
         return "";
     }
 }

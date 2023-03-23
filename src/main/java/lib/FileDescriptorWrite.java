@@ -6,7 +6,13 @@ public class FileDescriptorWrite extends FileDescriptor {
         super(fd, name);
     }
 
-    public void write() {
+    @Override
+    public String read() {
+        return null;
+    }
+
+    @Override
+    public void write(String output) {
 
     }
 

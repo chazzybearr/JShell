@@ -43,7 +43,7 @@ public class Redirect extends Command {
                 ArrayList<String> args = new ArrayList<>() {{
                     add(file);
                 }};
-                Command cat = Constants.COMMAND_FROM_STR.get("cat");
+                Command cat = Constants.get("cat");
                 List<String> commandArguments = Arrays.asList(cat.runCommand(state, args).split(" "));
                 returnString = command.runCommand(state, commandArguments);
             }
@@ -57,7 +57,7 @@ public class Redirect extends Command {
 
                 // File does not exist
                 if (!DirectoryHelper.isInDirectory(state.getWorkingDirectory(), file)) {
-                    Command touch = Constants.COMMAND_FROM_STR.get("touch");
+                    Command touch = Constants.get("touch");
                     ArrayList<String> args = new ArrayList<>() {{
                         add(file);
                     }};

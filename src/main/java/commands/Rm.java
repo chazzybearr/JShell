@@ -12,6 +12,8 @@ import state.ShellState;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static lib.Constants.STDOUT;
+
 public class Rm extends Command{
 
     static int MIN_ARGUMENTS = 1;
@@ -55,6 +57,7 @@ public class Rm extends Command{
             throw new MkdirFileException(errorString.toString());
         }
 
+        fileDescriptors.get(STDOUT).write("");
         return "";
     }
 

@@ -1,35 +1,38 @@
 package commands;
 
 import exceptions.JShellException;
-import lib.Constants;
-import lib.Redirect;
+import lib.*;
 import state.ShellState;
 
 import java.util.List;
 
+import static lib.Constants.STDERR;
+
 public class CommandController {
 
-    public String runCommand(ShellState state, String comm, List<String> args) {
+    public void runCommand(ShellState state, String comm, List<String> args) {
 
-        String ret;
-        Command command = Constants.COMMAND_FROM_STR.get(comm);
+        Command command = Constants.get(comm);
 
         if (command == null) {
             System.out.print(comm + ": command not found\n");
-            return "";
+            return;
         }
 
         try {
             if (args.contains(">") || args.contains("<")) {
                 Redirect redirect = new Redirect(command);
-                ret = redirect.runCommand(state, args);
+                redirect.runCommand(state, args);
+            } else if (args.contains("|")) {
+                Pipe2 pipe2 = new Pipe2(command);
+                pipe2.runCommand(state, args);
             } else {
-                ret = command.runCommand(state, args);
+                command.runCommand(state, args);
             }
         } catch (JShellException ex) {
-            ret = ex.getMessage();
+            command.getFd(STDERR).write(ex.getMessage());
+
         }
-        return ret;
 
     }
 

@@ -8,6 +8,8 @@ import state.ShellState;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static lib.Constants.STDOUT;
+
 public class Ls extends Command {
 
     static int MIN_ARGUMENT = 0;
@@ -20,6 +22,9 @@ public class Ls extends Command {
 
     @Override
     public String runCommand(ShellState state, List<String> arguments) throws JShellException {
+
+        String returnString;
+
         if (!checkArguments(arguments)) {
             throw new LsException("-jshell: ls: invalid option: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "\nls: usage: ls\n");
         }
@@ -52,7 +57,10 @@ public class Ls extends Command {
             contents.append('\n');
         }
         state.getWorkingDirectory().setAccessTime(LocalDateTime.now());
-        return contents.toString();
+
+        returnString = contents.toString();
+        fileDescriptors.get(STDOUT).write(returnString);
+        return returnString;
     }
 
 }
