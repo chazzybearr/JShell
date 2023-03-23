@@ -9,6 +9,7 @@ import state.ShellState;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Redirect extends Command {
@@ -24,6 +25,7 @@ public class Redirect extends Command {
 
         String option;
         String file;
+        String returnString = "";
 
 
         if (arguments.contains("<")) {
@@ -37,14 +39,21 @@ public class Redirect extends Command {
 
         switch (option) {
             // Input redirection
-            case "<":
+            case "<": {
+                ArrayList<String> args = new ArrayList<>() {{
+                    add(file);
+                }};
+                Command cat = Constants.COMMAND_FROM_STR.get("cat");
+                List<String> commandArguments = Arrays.asList(cat.runCommand(state, args).split(" "));
+                returnString = command.runCommand(state, commandArguments);
+            }
 
             // Output redirection
-            case ">":
+            case ">": {
 
                 // Set the result of the command as file contents
                 List<String> commandArguments = arguments.subList(0, arguments.indexOf(option));
-                String returnString = command.runCommand(state, commandArguments);
+                String returnedString = command.runCommand(state, commandArguments);
 
                 // File does not exist
                 if (!DirectoryHelper.isInDirectory(state.getWorkingDirectory(), file)) {
@@ -55,22 +64,21 @@ public class Redirect extends Command {
                     touch.runCommand(state, args);
 
                     File fileObject = (File) PathHelper.filesysObjectFromPath(state, file);
-                    fileObject.setContents(returnString);
+                    fileObject.setContents(returnedString);
                     LocalDateTime now = LocalDateTime.now();
                     fileObject.setAccessTime(now);
                     fileObject.setModifiedTime(now);
 
-                // File exists, overwrite contents
+                    // File exists, overwrite contents
                 } else {
                     File fileObject = (File) PathHelper.filesysObjectFromPath(state, file);
-                    fileObject.setContents(returnString);
+                    fileObject.setContents(returnedString);
                     LocalDateTime now = LocalDateTime.now();
                     fileObject.setAccessTime(now);
                     fileObject.setModifiedTime(now);
                 }
-
+            }
         }
-
-        return "";
+        return returnString;
     }
 }
