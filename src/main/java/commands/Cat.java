@@ -2,6 +2,7 @@ package commands;
 
 import exceptions.CatException;
 import exceptions.CatFileException;
+import exceptions.JShellException;
 import file_system.Directory;
 import file_system.File;
 import file_system.FilesysObject;
@@ -9,6 +10,7 @@ import helpers.DirectoryHelper;
 import helpers.PathHelper;
 import state.ShellState;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Cat extends Command{
@@ -21,9 +23,9 @@ public class Cat extends Command{
     }
 
     @Override
-    public String runCommand(ShellState state, List<String> arguments) throws Exception {
+    public String runCommand(ShellState state, List<String> arguments) throws JShellException {
         if (!checkArguments(arguments)) {
-            throw new CatException("cat: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\ncat: usage: cat [FILE]");
+            throw new CatException("cat: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\ncat: usage: cat [FILE]\n");
         }
 
         StringBuilder returnString = new StringBuilder();
@@ -40,6 +42,9 @@ public class Cat extends Command{
                     continue;
                 }
                 returnString.append(((File)fileObj).getContents()).append("\n");
+                LocalDateTime now = LocalDateTime.now();
+                fileObj.setAccessTime(now);
+                fileObj.setModifiedTime(now);
             }
             // Argument does not exist
             else {
@@ -47,10 +52,10 @@ public class Cat extends Command{
             }
         }
         if (!errorString.isEmpty()) {
-            throw new CatFileException(errorString.deleteCharAt(errorString.length() - 1).toString());
+            throw new CatFileException(errorString.toString());
         }
 
-        return returnString.toString();
+        return returnString.deleteCharAt(returnString.length() - 1).toString();
     }
 
 }

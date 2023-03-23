@@ -1,5 +1,6 @@
 package commands;
 
+import exceptions.JShellException;
 import exceptions.MkdirException;
 import exceptions.MkdirFileException;
 import file_system.Directory;
@@ -17,9 +18,9 @@ public class Mkdir extends Command{
     }
 
     @Override
-    public String runCommand(ShellState state, List<String> arguments) throws Exception {
+    public String runCommand(ShellState state, List<String> arguments) throws JShellException {
         if (!checkArguments(arguments)) {
-            throw new MkdirException("mkdir: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\nmkdir: usage: mkdir [dir]");
+            throw new MkdirException("mkdir: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\nmkdir: usage: mkdir [dir]\n");
         }
 
         StringBuilder errorString = new StringBuilder();
@@ -36,7 +37,7 @@ public class Mkdir extends Command{
             }
         }
         if (!errorString.isEmpty()) {
-            throw new MkdirFileException(errorString.deleteCharAt(errorString.length() - 1).toString());
+            throw new MkdirFileException(errorString.toString());
         }
 
         return "";

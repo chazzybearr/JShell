@@ -1,6 +1,6 @@
 package exceptions;
 
-public class CdException extends Exception{
+public class CdException extends JShellException{
 
     public CdException(String errorMessage) {
         super(errorMessage);

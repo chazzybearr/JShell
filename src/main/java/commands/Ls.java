@@ -1,9 +1,11 @@
 package commands;
 
+import exceptions.JShellException;
 import exceptions.LsException;
 import file_system.FilesysObject;
 import state.ShellState;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Ls extends Command {
@@ -17,9 +19,9 @@ public class Ls extends Command {
     }
 
     @Override
-    public String runCommand(ShellState state, List<String> arguments) throws Exception {
+    public String runCommand(ShellState state, List<String> arguments) throws JShellException {
         if (!checkArguments(arguments)) {
-            throw new LsException("-jshell: ls: invalid option: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "\nls: usage: ls");
+            throw new LsException("-jshell: ls: invalid option: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "\nls: usage: ls\n");
         }
 
         StringBuilder contents = new StringBuilder();
@@ -49,6 +51,7 @@ public class Ls extends Command {
         if (!contents.isEmpty()) {
             contents.append('\n');
         }
+        state.getWorkingDirectory().setAccessTime(LocalDateTime.now());
         return contents.toString();
     }
 

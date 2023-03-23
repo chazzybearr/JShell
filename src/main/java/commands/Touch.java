@@ -1,5 +1,6 @@
 package commands;
 
+import exceptions.JShellException;
 import exceptions.TouchException;
 import file_system.File;
 import file_system.FilesysObject;
@@ -19,7 +20,7 @@ public class Touch extends Command{
     }
 
     @Override
-    public String runCommand(ShellState state, List<String> arguments) throws Exception {
+    public String runCommand(ShellState state, List<String> arguments) throws JShellException {
         if (!checkArguments(arguments)) {
             throw new TouchException("touch: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\ntouch: usage: touch [FILE]");
         }

@@ -2,6 +2,7 @@ package commands;
 
 import exceptions.CdException;
 import exceptions.CdFileException;
+import exceptions.JShellException;
 import file_system.Directory;
 import file_system.File;
 import file_system.FilesysObject;
@@ -20,16 +21,17 @@ public class Cd extends Command{
 
 
     @Override
-    public String runCommand(ShellState state, List<String> arguments) throws Exception {
+    public String runCommand(ShellState state, List<String> arguments) throws JShellException {
         if (!checkArguments(arguments)) {
-            throw new CdException("-jshell: cd: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\ncd: usage: cd [dir]");
+            throw new CdException("-jshell: cd: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\ncd: usage: cd [dir]]\n");
         }
         String path = arguments.get(0);
         FilesysObject targetDirectory = PathHelper.filesysObjectFromPath(state, path);
         if (targetDirectory instanceof File) {
-            throw new CdFileException("cd: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + ": No such directory");
+            throw new CdFileException("cd: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + ": Not a directory\n");
         }
         state.setWorkingDirectory((Directory) targetDirectory);
+        targetDirectory.setAccessTime();
         return "";
     }
 }

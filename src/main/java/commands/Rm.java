@@ -1,5 +1,6 @@
 package commands;
 
+import exceptions.JShellException;
 import exceptions.MkdirFileException;
 import exceptions.RmException;
 import file_system.Directory;
@@ -8,6 +9,7 @@ import helpers.DirectoryHelper;
 import helpers.PathHelper;
 import state.ShellState;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Rm extends Command{
@@ -20,7 +22,7 @@ public class Rm extends Command{
     }
 
     @Override
-    public String runCommand(ShellState state, List<String> arguments) throws Exception {
+    public String runCommand(ShellState state, List<String> arguments) throws JShellException {
         if (!checkArguments(arguments)) {
             throw new RmException("rm: " + arguments.toString().replace(",", "").replace("[", "").replace("]", "") + "invalid option\nrm: usage: rm [FILE]");
         }
@@ -40,6 +42,9 @@ public class Rm extends Command{
 
 
                 state.getWorkingDirectory().removeContent(fileObj);
+                LocalDateTime now = LocalDateTime.now();
+                state.getWorkingDirectory().setAccessTime(now);
+                state.getWorkingDirectory().setAccessTime(now);
             }
             // Argument does not exist
             else {
@@ -47,7 +52,7 @@ public class Rm extends Command{
             }
         }
         if (!errorString.isEmpty()) {
-            throw new MkdirFileException(errorString.deleteCharAt(errorString.length() - 1).toString());
+            throw new MkdirFileException(errorString.toString());
         }
 
         return "";

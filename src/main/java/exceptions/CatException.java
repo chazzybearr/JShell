@@ -1,6 +1,6 @@
 package exceptions;
 
-public class CatException extends Exception{
+public class CatException extends JShellException{
 
     public CatException(String errorMessage) {
         super(errorMessage);

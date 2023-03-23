@@ -13,7 +13,7 @@ public class Echo extends Command{
     }
 
     @Override
-    public String runCommand(ShellState state, List<String> arguments) throws Exception {
+    public String runCommand(ShellState state, List<String> arguments) {
 
         StringBuilder returnString = new StringBuilder();
         for (String word : arguments) {

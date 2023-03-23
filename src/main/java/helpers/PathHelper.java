@@ -1,6 +1,7 @@
 package helpers;
 
-import exceptions.CdFileException;
+import exceptions.FileException;
+import exceptions.JShellException;
 import file_system.Directory;
 import file_system.FilesysObject;
 import state.ShellState;
@@ -9,7 +10,7 @@ import java.util.Objects;
 
 public class PathHelper {
 
-    public static FilesysObject filesysObjectFromPath (ShellState state, String path) throws Exception {
+    public static FilesysObject filesysObjectFromPath (ShellState state, String path) throws JShellException {
 
         // Absolute path
         FilesysObject curr;
@@ -28,7 +29,7 @@ public class PathHelper {
                     }
                 }
                 if (!found) {
-                    throw new CdFileException("cd: " + step + ": No such file or directory");
+                    throw new FileException("cd: " + step + ": No such file or directory\n");
                 }
             }
         }
@@ -56,7 +57,7 @@ public class PathHelper {
                         }
                     }
                     if (!found) {
-                        throw new CdFileException(step + ": No such file or directory");
+                        throw new FileException(step + ": No such file or directory\n");
                     }
                 }
             }
